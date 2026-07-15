@@ -458,3 +458,22 @@ section:hover {
 h2 .material-symbol { margin-right: 7px; color: #ffb38a; vertical-align: -2px; }
 .symbol { border-radius: 50%; font-size: 1rem; }
 .badge, .status-pill { gap: 5px; }
+
+/* Keep the icon glyph box centered instead of relying on the font baseline. */
+.material-symbol { vertical-align: middle; }
+.brand-mark.material-symbol,
+.symbol.material-symbol,
+.theme-thumb .material-symbol {
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+.legend .material-symbol,
+.badge .material-symbol,
+.status-pill .material-symbol,
+.site-link .material-symbol {
+  display: inline-grid;
+  place-items: center;
+  line-height: 1;
+}
+h2 .material-symbol { vertical-align: -0.12em; }
