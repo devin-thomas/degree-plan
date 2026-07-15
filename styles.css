@@ -129,13 +129,6 @@ button { font: inherit; }
   outline-offset: 2px;
 }
 
-.theme-label {
-  min-width: 72px;
-  text-align: right;
-  font-size: .84rem;
-  font-weight: 650;
-}
-
 .theme-switch {
   position: relative;
   width: 48px;
@@ -387,7 +380,6 @@ h2 {
 @media (max-width: 520px) {
   .top-app-bar { padding: 8px 12px; }
   .brand-mark { width: 34px; height: 34px; }
-  .theme-label { display: none; }
   .theme-toggle { padding-left: 7px; }
   main { width: calc(100% - 16px); margin-top: 14px; }
   section { padding: 16px 14px; border-radius: 18px; }
@@ -480,3 +472,34 @@ h2 .material-symbol { margin-right: 7px; color: #ffb38a; vertical-align: -2px; }
 h2 .material-symbol { vertical-align: -0.12em; }
 .brand-mark > .material-symbol,
 .symbol > .material-symbol { transform: translateY(1px); }
+
+.grade-slot {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-top: -2px;
+  color: var(--on-surface-variant);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.grade-input {
+  width: 3.5rem;
+  height: 2rem;
+  padding: 3px 8px;
+  color: var(--on-surface);
+  background: var(--surface-high);
+  border: 1px solid var(--outline-variant);
+  border-radius: 8px;
+  font: 700 .9rem/1 ui-monospace, "Cascadia Code", Consolas, monospace;
+  text-align: center;
+  text-transform: uppercase;
+}
+.grade-input::placeholder { color: var(--on-surface-variant); opacity: .72; }
+.grade-input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  outline-offset: 2px;
+  border-color: var(--primary);
+}

@@ -30,6 +30,25 @@
     });
   }
 
+  function addGradeInputs() {
+    document.querySelectorAll(".course.complete").forEach(function (course) {
+      if (course.parentElement.classList.contains("choice") || course.querySelector(".grade-slot")) return;
+      const code = course.querySelector(".code");
+      const courseName = (code ? code.parentElement.textContent.replace(code.textContent, "") : course.textContent).trim();
+      const key = "degree-plan-grade-" + (code ? code.textContent.trim() : courseName);
+      const label = document.createElement("label");
+      label.className = "grade-slot";
+      label.innerHTML = '<span class="grade-label">Grade</span><input class="grade-input" type="text" maxlength="3" autocomplete="off" placeholder="—">';
+      const input = label.querySelector("input");
+      input.setAttribute("aria-label", "Grade for " + courseName);
+      try { input.value = localStorage.getItem(key) || ""; } catch (_) {}
+      input.addEventListener("input", function () {
+        try { localStorage.setItem(key, input.value.trim().toUpperCase()); } catch (_) {}
+      });
+      course.appendChild(label);
+    });
+  }
+
   function addCrossLink() {
     const bar = document.querySelector(".top-app-bar");
     const toggle = document.querySelector("[data-theme-toggle]");
@@ -87,8 +106,6 @@
     const isLight = root.dataset.theme === "light";
     button.setAttribute("aria-pressed", String(isLight));
     button.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
-    const label = button.querySelector(".theme-label");
-    if (label) label.textContent = isLight ? "Dark theme" : "Light theme";
     const icon = button.querySelector(".theme-thumb");
     if (icon) {
       icon.innerHTML = isLight
@@ -99,6 +116,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     addMaterialDetails();
+    addGradeInputs();
     addCrossLink();
     syncToggle();
     const button = document.querySelector("[data-theme-toggle]");
