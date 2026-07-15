@@ -4,6 +4,33 @@
   try { saved = localStorage.getItem("degree-plan-theme"); } catch (_) {}
   root.dataset.theme = saved === "light" ? "light" : "dark";
 
+  function addMaterialDetails() {
+    const symbols = { "+": "check_circle", "●": "event_available", "◆": "swap_horiz", "◷": "schedule", "○": "radio_button_unchecked" };
+    document.querySelectorAll(".symbol").forEach(function (node) {
+      const icon = symbols[node.textContent.trim()];
+      if (icon) {
+        node.classList.add("material-symbol");
+        node.textContent = icon;
+      }
+    });
+    document.querySelectorAll("h2").forEach(function (heading) {
+      if (heading.querySelector(".material-symbol")) return;
+      const icon = document.createElement("span");
+      icon.className = "material-symbol";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "calendar_month";
+      heading.prepend(icon);
+    });
+    document.querySelectorAll(".badge, .status-pill").forEach(function (pill) {
+      if (pill.querySelector(".material-symbol")) return;
+      const icon = document.createElement("i");
+      icon.className = "material-symbol";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = pill.classList.contains("pending") ? "schedule" : pill.classList.contains("substitution") ? "swap_horiz" : pill.classList.contains("neutral") ? "radio_button_unchecked" : "check_circle";
+      pill.prepend(icon);
+    });
+  }
+
   function addCrossLink() {
     const bar = document.querySelector(".top-app-bar");
     const toggle = document.querySelector("[data-theme-toggle]");
@@ -13,7 +40,7 @@
     link.className = "site-link";
     link.href = "https://devin-thomas.github.io/college-courses/";
     link.setAttribute("aria-label", "Open selected college courses");
-    link.innerHTML = '<span>Selected Courses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 5.2 19 11H4v2h15l-5.8 5.8 1.4 1.4L22.8 12l-8.2-8.2-1.4 1.4Z"/></svg>';
+    link.innerHTML = '<span>Selected Courses</span><i class="material-symbol" aria-hidden="true">arrow_forward</i>';
 
     if (toggle) bar.insertBefore(link, toggle);
     else bar.appendChild(link);
@@ -30,8 +57,8 @@
         margin-left: auto;
         padding: 0 14px;
         border-radius: 999px;
-        color: var(--md-on-primary-container);
-        background: var(--md-primary-container);
+        color: var(--on-primary-container);
+        background: var(--primary-container);
         font-size: .86rem;
         font-weight: 740;
         line-height: 1;
@@ -42,14 +69,14 @@
       .site-link:hover { filter: brightness(1.12); }
       .site-link:active { transform: scale(.98); }
       .site-link:focus-visible {
-        outline: 3px solid color-mix(in srgb, var(--md-primary) 55%, transparent);
+        outline: 3px solid color-mix(in srgb, var(--primary) 55%, transparent);
         outline-offset: 3px;
       }
-      .site-link svg { width: 18px; height: 18px; fill: currentColor; }
+      .site-link .material-symbol { font-size: 18px; }
       .theme-toggle { flex: 0 0 auto; }
       @media (max-width: 560px) {
         .site-link { min-height: 40px; padding: 0 10px; font-size: .78rem; }
-        .site-link svg { width: 16px; height: 16px; }
+        .site-link .material-symbol { font-size: 16px; }
       }
     `;
     document.head.appendChild(style);
@@ -66,12 +93,13 @@
     const icon = button.querySelector(".theme-thumb");
     if (icon) {
       icon.innerHTML = isLight
-        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-1V2Zm0 17h1v3h-1v-3ZM2 11h3v1H2v-1Zm17 0h3v1h-3v-1ZM4.2 4.9l.7-.7L7 6.3l-.7.7-2.1-2.1Zm12 12 .7-.7 2.1 2.1-.7.7-2.1-2.1Zm2.1-12.7.7.7L16.9 7l-.7-.7 2.1-2.1ZM6.3 16.2l.7.7L4.9 19l-.7-.7 2.1-2.1Z"/></svg>'
-        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 15.2A8.5 8.5 0 0 1 8.8 3.7 8.5 8.5 0 1 0 20.3 15.2Z"/></svg>';
+        ? '<span class="material-symbol" aria-hidden="true">light_mode</span>'
+        : '<span class="material-symbol" aria-hidden="true">dark_mode</span>';
     }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    addMaterialDetails();
     addCrossLink();
     syncToggle();
     const button = document.querySelector("[data-theme-toggle]");
