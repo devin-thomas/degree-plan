@@ -9,8 +9,7 @@
     document.querySelectorAll(".symbol").forEach(function (node) {
       const icon = symbols[node.textContent.trim()];
       if (icon) {
-        node.classList.add("material-symbol");
-        node.textContent = icon;
+        node.innerHTML = '<span class="material-symbol" aria-hidden="true">' + icon + '</span>';
       }
     });
     document.querySelectorAll("h2").forEach(function (heading) {

@@ -441,7 +441,8 @@ body {
   background: var(--surface-container);
 }
 
-.brand-mark { border-radius: 14px; font-size: 1.35rem; }
+.brand-mark { border-radius: 14px; }
+.brand-mark .material-symbol { font-size: 1.35rem; }
 .page-header { margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--outline-variant); }
 .legend span { gap: 5px; }
 .legend .material-symbol { font-size: 1rem; }
@@ -461,8 +462,8 @@ h2 .material-symbol { margin-right: 7px; color: #ffb38a; vertical-align: -2px; }
 
 /* Keep the icon glyph box centered instead of relying on the font baseline. */
 .material-symbol { vertical-align: middle; }
-.brand-mark.material-symbol,
-.symbol.material-symbol,
+.brand-mark,
+.symbol,
 .theme-thumb .material-symbol {
   display: grid;
   place-items: center;
@@ -477,3 +478,5 @@ h2 .material-symbol { margin-right: 7px; color: #ffb38a; vertical-align: -2px; }
   line-height: 1;
 }
 h2 .material-symbol { vertical-align: -0.12em; }
+.brand-mark > .material-symbol,
+.symbol > .material-symbol { transform: translateY(1px); }
