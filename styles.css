@@ -485,21 +485,10 @@ h2 .material-symbol { vertical-align: -0.12em; }
   font-weight: 700;
   letter-spacing: .02em;
 }
-.grade-input {
-  width: 3.5rem;
-  height: 2rem;
+.grade-value {
   padding: 3px 8px;
-  color: var(--on-surface);
-  background: var(--surface-high);
-  border: 1px solid var(--outline-variant);
+  color: var(--on-success-container);
+  background: var(--success-container);
   border-radius: 8px;
   font: 700 .9rem/1 ui-monospace, "Cascadia Code", Consolas, monospace;
-  text-align: center;
-  text-transform: uppercase;
-}
-.grade-input::placeholder { color: var(--on-surface-variant); opacity: .72; }
-.grade-input:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--primary) 55%, transparent);
-  outline-offset: 2px;
-  border-color: var(--primary);
 }

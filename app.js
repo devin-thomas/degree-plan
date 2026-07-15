@@ -1,5 +1,8 @@
 (function () {
   const root = document.documentElement;
+  const completedGrades = Object.freeze({
+    // Add completed course grades here, keyed by course code.
+  });
   let saved = null;
   try { saved = localStorage.getItem("degree-plan-theme"); } catch (_) {}
   root.dataset.theme = saved === "light" ? "light" : "dark";
@@ -30,22 +33,17 @@
     });
   }
 
-  function addGradeInputs() {
+  function addCompletedGrades() {
     document.querySelectorAll(".course.complete").forEach(function (course) {
       if (course.parentElement.classList.contains("choice") || course.querySelector(".grade-slot")) return;
       const code = course.querySelector(".code");
-      const courseName = (code ? code.parentElement.textContent.replace(code.textContent, "") : course.textContent).trim();
-      const key = "degree-plan-grade-" + (code ? code.textContent.trim() : courseName);
-      const label = document.createElement("label");
-      label.className = "grade-slot";
-      label.innerHTML = '<span class="grade-label">Grade</span><input class="grade-input" type="text" maxlength="3" autocomplete="off" placeholder="—">';
-      const input = label.querySelector("input");
-      input.setAttribute("aria-label", "Grade for " + courseName);
-      try { input.value = localStorage.getItem(key) || ""; } catch (_) {}
-      input.addEventListener("input", function () {
-        try { localStorage.setItem(key, input.value.trim().toUpperCase()); } catch (_) {}
-      });
-      course.appendChild(label);
+      const grade = code && completedGrades[code.textContent.trim()];
+      if (!grade) return;
+      const gradeSlot = document.createElement("span");
+      gradeSlot.className = "grade-slot";
+      gradeSlot.innerHTML = '<span class="grade-label">Grade</span><span class="grade-value"></span>';
+      gradeSlot.querySelector(".grade-value").textContent = grade;
+      course.appendChild(gradeSlot);
     });
   }
 
@@ -116,7 +114,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     addMaterialDetails();
-    addGradeInputs();
+    addCompletedGrades();
     addCrossLink();
     syncToggle();
     const button = document.querySelector("[data-theme-toggle]");
