@@ -1,10 +1,8 @@
-# A.A.S. Degree Completion Plan
+# Degree Plan
 
-Standalone Material 3-style course planning page.
+Complete degree-requirement view showing every listed course option, selected choices, registration statuses, and approved substitutions/equivalents.
 
 ## GitHub Pages
-
-Once Pages is enabled with **GitHub Actions** as its source, the site will be available at:
 
 https://devin-thomas.github.io/degree-plan/
 
